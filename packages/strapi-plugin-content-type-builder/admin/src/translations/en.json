@@ -3,6 +3,7 @@
   "plugin.description.long": "Modelize the data structure of your API. Create new fields and relations in just a minute. The files are automatically created and updated in your project.",
   "attribute.string": "String",
   "attribute.text": "Text",
+  "attribute.enumeration": "Enumeration",
   "attribute.boolean": "Boolean",
   "attribute.float": "Float",
   "attribute.integer": "integer",
@@ -41,6 +42,7 @@
   "error.validation.minSupMax": "Can't be superior",
 
   "form.attribute.item.textarea.name": "Name",
+  "form.attribute.item.enumeration.name": "Name",
   "form.attribute.item.number.name": "Name",
   "form.attribute.item.date.name": "Name",
   "form.attribute.item.media.name": "Name",
@@ -105,6 +107,7 @@
 
   "popUpForm.attributes.string.description": "Titles, names, paragraphs, list of names",
   "popUpForm.attributes.text.description": "Descriptions, text paragraphs, articles ",
+  "popUpForm.attributes.enumeration.description": "List of strings",
   "popUpForm.attributes.boolean.description": "Yes or no, 1 or 0, true or false",
   "popUpForm.attributes.number.description": "Everything that is number",
   "popUpForm.attributes.date.description": "Event date, opening hours",
@@ -116,6 +119,7 @@
 
   "popUpForm.attributes.string.name": "String",
   "popUpForm.attributes.text.name": "Text",
+  "popUpForm.attributes.enumeration.name": "Enumeration",
   "popUpForm.attributes.boolean.name": "Boolean",
   "popUpForm.attributes.date.name": "Date",
   "popUpForm.attributes.json.name": "JSON",

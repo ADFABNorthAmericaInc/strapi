@@ -322,7 +322,7 @@ class Input extends React.Component { // eslint-disable-line react/prefer-statel
           autoFocus={this.props.autoFocus}
         >
           {map(this.props.selectOptions, (option, key) => (
-            option.name ?
+            option.name && isObject(option) ?
               <FormattedMessage id={option.name} defaultMessage={option.name} values={{ option: option.name }} key={key}>
                 {(message) => (
                   <option value={option.value}>
@@ -330,7 +330,7 @@ class Input extends React.Component { // eslint-disable-line react/prefer-statel
                   </option>
                 )}
               </FormattedMessage> :
-              <option value={option.value} key={key}>{option.value}</option>
+              <option value={option} key={key}>{option}</option>
           ))}
         </select>
         <div className={styles.inputDescriptionContainer}>
@@ -340,7 +340,6 @@ class Input extends React.Component { // eslint-disable-line react/prefer-statel
         {spacer}
       </div>
     );
-
   }
 
   renderInputSearch = (requiredClass, inputDescription, handleBlur) => {

@@ -25,19 +25,89 @@
     "password": {
       "type": "password",
       "minLength": 6,
-      "configurable": false,
-      "private": true
+      "configurable": false
     },
     "resetPasswordToken": {
       "type": "string",
-      "configurable": false,
-      "private": true
+      "configurable": false
     },
     "role": {
       "model": "role",
       "via": "users",
       "plugin": "users-permissions",
       "configurable": false
+    },
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "company": {
+      "model": "company",
+      "via": "users"
+    },
+    "votes": {
+      "collection": "vote",
+      "via": "user"
+    },
+    "division": {
+      "model": "division",
+      "via": "users"
+    },
+    "license": {
+      "model": "license",
+      "via": "user"
+    },
+    "company_manager": {
+      "model": "company",
+      "via": "manager"
+    },
+    "division_owner": {
+      "model": "division",
+      "via": "owner"
+    },
+    "animated_boards": {
+      "model": "board",
+      "via": "animator"
+    },
+    "facets": {
+      "collection": "facet",
+      "via": "author"
+    },
+    "created_boards": {
+      "collection": "board",
+      "via": "author"
+    },
+    "managed_boards": {
+      "model": "board",
+      "via": "manager"
+    },
+    "created_ideas": {
+      "collection": "idea",
+      "via": "author"
+    },
+    "created_brainstorms": {
+      "collection": "brainstorm",
+      "via": "author"
+    },
+    "animated_brainstorms": {
+      "collection": "brainstorm",
+      "via": "animator"
+    },
+    "joined_brainstorms": {
+      "collection": "brainstorm",
+      "via": "participants"
     }
-  }
+  },
+  "collectionName": "users-permissions_user"
 }

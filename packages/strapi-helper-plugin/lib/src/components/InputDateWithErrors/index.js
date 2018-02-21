@@ -120,7 +120,7 @@ class InputDateWithErrors extends React.Component { // eslint-disable-line react
           deactivateErrorHighlight={deactivateErrorHighlight}
           error={!isEmpty(this.state.errors)}
           name={name}
-          onBlur={handleBlur}
+          onBlur={(moment) => handleBlur({ target: { name: name, value: moment }})}
           onChange={onChange}
           onFocus={onFocus}
           placeholder={placeholder}

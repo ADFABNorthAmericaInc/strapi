@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import { findIndex, get, omit, isFunction, merge } from 'lodash';
 
 // Components.
-import Input from 'components/Input';
+import Input from 'components/InputsIndex';
 
 // Utils.
 import getQueryParameters from 'utils/getQueryParameters';
@@ -43,6 +43,8 @@ class EditForm extends React.Component {
       case 'bigint':
       case 'decimal':
         return 'number';
+      case 'enumeration':
+        return 'select';
       default:
         return 'text';
     }
@@ -79,7 +81,6 @@ class EditForm extends React.Component {
           type={get(layout, 'type', this.getInputType(details.type))}
           label={get(layout, 'label') || details.label || ''}
           name={attr}
-          customBootstrapClass={get(layout, 'className') || ''}
           value={this.props.record.get(attr) || ''}
           placeholder={get(layout, 'placeholder') || details.placeholder || details.label || attr || ''}
           onChange={this.props.onChange}
@@ -87,6 +88,8 @@ class EditForm extends React.Component {
           errors={errors}
           didCheckErrors={this.props.didCheckErrors}
           pluginID="content-manager"
+          selectOptions={get(this.props.attributes, [attr, 'enum'])} // enum
+          customBootstrapClass={get(layout, 'className') || 'col-md-6'}
         />
       );
     });
@@ -102,6 +105,7 @@ class EditForm extends React.Component {
 }
 
 EditForm.propTypes = {
+  attributes: PropTypes.object.isRequired,
   currentModelName: PropTypes.string.isRequired,
   didCheckErrors: PropTypes.bool.isRequired,
   formErrors: PropTypes.array.isRequired,

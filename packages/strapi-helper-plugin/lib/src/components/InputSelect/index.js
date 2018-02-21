@@ -6,7 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, map } from 'lodash';
+import { isEmpty, map, isObject } from 'lodash';
 import cn from 'classnames';
 
 // Design
@@ -34,7 +34,12 @@ function InputSelect(props) {
       tabIndex={props.tabIndex}
       value={props.value}
     >
-      {map(props.selectOptions, (option, key) => <SelectOption key={key} {...option} />)}
+      {map(props.selectOptions, (option, key) => {
+        if (isObject(option)) {
+          return <SelectOption key={key} {...option} />
+        }
+        return <option key={key} value={option}>{option}</option>
+      })}
     </select>
   );
 }
@@ -62,13 +67,16 @@ InputSelect.propTypes = {
   onChange: PropTypes.func.isRequired,
   onFocus: PropTypes.func,
   selectOptions: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      name: PropTypes.string,
-      params: PropTypes.object,
-      value: PropTypes.string.isRequired,
-    }).isRequired,
-  ).isRequired,
+    PropTypes.oneOfType([
+      PropTypes.shape({
+        id: PropTypes.string,
+        name: PropTypes.string,
+        params: PropTypes.object,
+        value: PropTypes.string.isRequired,
+      }),
+      PropTypes.string,
+    ]),
+  ),
   style: PropTypes.object,
   tabIndex: PropTypes.string,
   value: PropTypes.string.isRequired,

@@ -223,6 +223,7 @@ export class Edit extends React.Component {
                   formValidations={this.props.formValidations.toJS()}
                   layout={this.layout}
                   location={this.props.location}
+                  attributes={currentModel.attributes}
                 />
               </div>
             </div>
