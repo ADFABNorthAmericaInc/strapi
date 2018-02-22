@@ -6,7 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, map, isObject } from 'lodash';
+import { isEmpty, isObject, map } from 'lodash';
 import cn from 'classnames';
 
 // Design
@@ -36,7 +36,7 @@ function InputSelect(props) {
     >
       {map(props.selectOptions, (option, key) => {
         if (isObject(option)) {
-          return <SelectOption key={key} {...option} />
+          return <SelectOption key={key} {...option} />;
         }
         return <option key={key} value={option}>{option}</option>
       })}
@@ -76,7 +76,7 @@ InputSelect.propTypes = {
       }),
       PropTypes.string,
     ]),
-  ),
+  ).isRequired,
   style: PropTypes.object,
   tabIndex: PropTypes.string,
   value: PropTypes.string.isRequired,
