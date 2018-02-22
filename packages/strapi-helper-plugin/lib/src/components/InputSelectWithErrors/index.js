@@ -26,11 +26,11 @@ class InputSelectWithErrors extends React.Component {
         name: this.props.name,
         value: isObject(this.props.selectOptions[0]) ? this.props.selectOptions[0].value : this.props.selectOptions[0],
         type: 'select',
-      }
-      this.props.onChange({ target })
+      };
+      this.props.onChange({ target });
     }
     if (!this.props.validations.required) {
-      this.props.selectOptions.unshift('')
+      this.props.selectOptions.unshift('');
     }
     const { errors } = this.props;
     // Display input error if it already has some

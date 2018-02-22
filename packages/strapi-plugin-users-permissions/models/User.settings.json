@@ -81,7 +81,7 @@
       "via": "animator"
     },
     "facets": {
-      "collection": "facet",
+      "model": "facet",
       "via": "author"
     },
     "created_boards": {
@@ -93,7 +93,7 @@
       "via": "manager"
     },
     "created_ideas": {
-      "collection": "idea",
+      "model": "idea",
       "via": "author"
     },
     "created_brainstorms": {

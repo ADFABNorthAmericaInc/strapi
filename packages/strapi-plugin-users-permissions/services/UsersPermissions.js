@@ -339,6 +339,13 @@ module.exports = {
       return acc;
     }, []);
 
+    role.users.reduce((acc, user) => {
+      const key = role._id ? '_id' : 'id';
+      user[key] = user[key].toString();
+      acc.push(user);
+      return acc;
+    }, []);
+
     // Add user to this role.
     _.differenceBy(body.users, role.users, role._id ? '_id' : 'id')
       .filter(user => user.role !== `${root._id || root.id}`.toString())
