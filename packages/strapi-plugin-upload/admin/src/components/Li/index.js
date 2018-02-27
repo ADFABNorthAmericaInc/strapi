@@ -30,7 +30,8 @@ class Li extends React.Component {
 
   handleClick = (e) => {
     e.preventDefault();
-    this.refs.aTag.click();
+    const aTag = document.getElementById('aTag');
+    aTag.click();
   }
 
   handleDelete = (e) => {
@@ -59,10 +60,10 @@ class Li extends React.Component {
     }
 
     const icons = [
-      {
-        icoType: item.private ? 'lock' : 'unlock',
-        onClick: () => {},
-      },
+      // {
+      //   icoType: item.private ? 'lock' : 'unlock',
+      //   onClick: () => {},
+      // },
       {
         icoType: 'eye',
         onClick: this.handleClick,
@@ -76,17 +77,20 @@ class Li extends React.Component {
     return (
       <CopyToClipboard text={item.url} onCopy={() => this.setState({copied: true})}>
         <li className={styles.liWrapper}>
-          <a href={item.url} target="_blank" style={{ display: 'none' }} ref={(a) => { this.aTag = a; }}>nothing</a>
+          <a href={item.url} target="_blank" style={{ display: 'none' }} id="aTag">nothing</a>
           <div className={styles.liContainer}>
-            <div />
-            {Object.keys(item).map((value, key) => {
-              if (key === 0) {
-                return <FileIcon key={key} fileType={item[value]} />;
-              }
+            <div>
+              <div />
+              <FileIcon fileType={item.ext} />
+            </div>
+            {['hash', 'name', 'updatedAt', 'size', 'relatedTo', ''].map((value, key) => {
+              // if (key === 0) {
+              //   return <FileIcon key={key} fileType={item[value]} />;
+              // }
 
-              if (value !== 'url') {
+              if (value !== '') {
                 return (
-                  <div key={key}>{item[value]}</div>
+                  <div key={key} className={styles.truncate}>{item[value]}</div>
                 );
               }
 
