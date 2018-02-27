@@ -27,6 +27,14 @@
       "minLength": 6,
       "configurable": false
     },
+    "firstAuthToken": {
+      "type": "string",
+      "configurable": false
+    },
+    "firstAuthProfilePicture": {
+      "type": "boolean",
+      "configurable": false
+    },
     "resetPasswordToken": {
       "type": "string",
       "configurable": false
@@ -46,6 +54,12 @@
     "phone": {
       "type": "string"
     },
+    "billingAddress": {
+      "type": "text"
+    },
+    "zipCode": {
+      "type": "string"
+    },
     "city": {
       "type": "string"
     },
@@ -55,6 +69,12 @@
     "company": {
       "model": "company",
       "via": "users"
+    },
+    "promoCode": {
+      "type": "string"
+    },
+    "tosAccepted": {
+      "type": "boolean"
     },
     "votes": {
       "collection": "vote",
@@ -68,45 +88,57 @@
       "model": "license",
       "via": "user"
     },
-    "company_manager": {
+    "companyManager": {
       "model": "company",
       "via": "manager"
     },
-    "division_owner": {
+    "divisionOwner": {
       "model": "division",
       "via": "owner"
     },
-    "animated_boards": {
-      "model": "board",
+    "animatedBoards": {
+      "collection": "board",
       "via": "animator"
     },
-    "facets": {
-      "model": "facet",
+    "createdFacets": {
+      "collection": "facet",
       "via": "author"
     },
-    "created_boards": {
+    "createdBoards": {
       "collection": "board",
       "via": "author"
     },
-    "managed_boards": {
-      "model": "board",
+    "managedBoards": {
+      "collection": "board",
       "via": "manager"
     },
-    "created_ideas": {
-      "model": "idea",
+    "joinedBoards": {
+      "collection": "board",
+      "via": "participants"
+    },
+    "createdIdeas": {
+      "collection": "idea",
       "via": "author"
     },
-    "created_brainstorms": {
+    "createdBrainstorms": {
       "collection": "brainstorm",
       "via": "author"
     },
-    "animated_brainstorms": {
+    "animatedBrainstorms": {
       "collection": "brainstorm",
       "via": "animator"
     },
-    "joined_brainstorms": {
+    "joinedBrainstorms": {
       "collection": "brainstorm",
       "via": "participants"
+    },
+    "clustersIdeas": {
+      "collection": "clusterideas",
+      "via": "author"
+    },
+    "clustersFacets": {
+      "model": "clusterfacets",
+      "via": "author"
     }
   },
   "collectionName": "users-permissions_user"
