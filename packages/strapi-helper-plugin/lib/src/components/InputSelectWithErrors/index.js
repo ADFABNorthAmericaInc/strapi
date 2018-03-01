@@ -6,7 +6,11 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+<<<<<<< HEAD
 import { isEmpty, isFunction, isObject } from 'lodash';
+=======
+import { get, isEmpty, isFunction } from 'lodash';
+>>>>>>> 354a69c5f37e178158239efe651919cd1f54175c
 import cn from 'classnames';
 
 // Design
@@ -21,21 +25,19 @@ class InputSelectWithErrors extends React.Component {
   state = { errors: [] };
 
   componentDidMount() {
-    if (this.props.validations.required && isEmpty(this.props.value)) {
-      const target = {
-        name: this.props.name,
-        value: isObject(this.props.selectOptions[0]) ? this.props.selectOptions[0].value : this.props.selectOptions[0],
-        type: 'select',
-      };
-      this.props.onChange({ target });
-    }
-    if (!this.props.validations.required) {
-      this.props.selectOptions.unshift('');
-    }
     const { errors } = this.props;
     // Display input error if it already has some
     if (!isEmpty(errors)) {
       this.setState({ errors });
+    }
+
+    if (isEmpty(this.props.value) && this.props.validations.required) {
+      const target = {
+        type: 'select',
+        name: this.props.name,
+        value: get(this.props.selectOptions, ['0', 'value']) || get(this.props.selectOptions, ['0']),
+      };
+      this.props.onChange({ target });
     }
   }
 
@@ -149,6 +151,7 @@ InputSelectWithErrors.defaultProps = {
   selectOptions: [],
   style: {},
   tabIndex: '0',
+  validations: {},
 };
 
 InputSelectWithErrors.propTypes = {
@@ -203,6 +206,7 @@ InputSelectWithErrors.propTypes = {
   ).isRequired,
   style: PropTypes.object,
   tabIndex: PropTypes.string,
+  validation: PropTypes.object,
   value: PropTypes.string.isRequired,
 };
 
