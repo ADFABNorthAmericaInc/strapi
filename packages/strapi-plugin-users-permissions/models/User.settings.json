@@ -27,10 +27,6 @@
       "minLength": 6,
       "configurable": false
     },
-    "firstAuthToken": {
-      "type": "string",
-      "configurable": false
-    },
     "firstAuthProfilePicture": {
       "type": "boolean",
       "configurable": false
@@ -51,31 +47,6 @@
     "lastName": {
       "type": "string"
     },
-    "phone": {
-      "type": "string"
-    },
-    "billingAddress": {
-      "type": "text"
-    },
-    "zipCode": {
-      "type": "string"
-    },
-    "city": {
-      "type": "string"
-    },
-    "country": {
-      "type": "string"
-    },
-    "company": {
-      "model": "company",
-      "via": "users"
-    },
-    "promoCode": {
-      "type": "string"
-    },
-    "tosAccepted": {
-      "type": "boolean"
-    },
     "votes": {
       "collection": "vote",
       "via": "user"
@@ -88,13 +59,17 @@
       "model": "license",
       "via": "user"
     },
+    "company": {
+      "model": "company",
+      "via": "users"
+    },
     "companyManager": {
       "model": "company",
       "via": "manager"
     },
-    "divisionOwner": {
+    "divisionManager": {
       "model": "division",
-      "via": "owner"
+      "via": "manager"
     },
     "animatedBoards": {
       "collection": "board",
