@@ -51,6 +51,10 @@
       "collection": "vote",
       "via": "user"
     },
+    "userCompany": {
+      "model": "company",
+      "via": "companyUsers"
+    },
     "division": {
       "model": "division",
       "via": "users"
@@ -59,10 +63,6 @@
       "model": "license",
       "via": "user"
     },
-    "company": {
-      "model": "company",
-      "via": "users"
-    },
     "companyManager": {
       "model": "company",
       "via": "manager"
@@ -70,10 +70,6 @@
     "divisionManager": {
       "model": "division",
       "via": "manager"
-    },
-    "animatedBoards": {
-      "collection": "board",
-      "via": "animator"
     },
     "createdFacets": {
       "collection": "facet",
@@ -95,6 +91,10 @@
       "collection": "idea",
       "via": "author"
     },
+    "watchedIdeas": {
+      "collection": "idea",
+      "via": "watchers"
+    },
     "createdBrainstorms": {
       "collection": "brainstorm",
       "via": "author"
@@ -107,12 +107,16 @@
       "collection": "brainstorm",
       "via": "participants"
     },
-    "clustersIdeas": {
+    "createdClustersIdeas": {
       "collection": "clusterideas",
       "via": "author"
     },
+    "watchedClustersIdeas": {
+      "collection": "clusterideas",
+      "via": "watchers"
+    },
     "clustersFacets": {
-      "model": "clusterfacets",
+      "collection": "clusterfacets",
       "via": "author"
     }
   },
