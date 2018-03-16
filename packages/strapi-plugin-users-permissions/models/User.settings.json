@@ -118,6 +118,11 @@
     "clustersFacets": {
       "collection": "clusterfacets",
       "via": "author"
+    },
+    "picture": {
+      "collection": "file",
+      "via": "related",
+      "plugin": "upload"
     }
   },
   "collectionName": "users-permissions_user"

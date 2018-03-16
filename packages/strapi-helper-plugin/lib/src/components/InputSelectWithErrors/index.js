@@ -6,11 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-<<<<<<< HEAD
-import { isEmpty, isFunction, isObject } from 'lodash';
-=======
 import { get, isEmpty, isFunction } from 'lodash';
->>>>>>> 354a69c5f37e178158239efe651919cd1f54175c
 import cn from 'classnames';
 
 // Design
@@ -31,7 +27,7 @@ class InputSelectWithErrors extends React.Component {
       this.setState({ errors });
     }
 
-    if (isEmpty(this.props.value) && this.props.validations.required) {
+    if (isEmpty(this.props.value) && this.props.validations.required === true) {
       const target = {
         type: 'select',
         name: this.props.name,

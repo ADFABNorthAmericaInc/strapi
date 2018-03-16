@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
-import { get, includes, isEmpty, isObject, toNumber, toString, replace, size } from 'lodash';
+import { get, includes, isEmpty, isObject, toNumber, toString, replace } from 'lodash';
 import cn from 'classnames';
 
 // You can find these components in either
@@ -41,6 +41,7 @@ import {
   initModelProps,
   onCancel,
   resetProps,
+  setFileRelations,
   setFormErrors,
   submit,
 } from './actions';
@@ -53,15 +54,29 @@ import styles from './styles.scss';
 export class EditPage extends React.Component {
   componentDidMount() {
     this.props.initModelProps(this.getModelName(), this.isCreating(), this.getSource(), this.getModelAttributes());
-    this.layout = bindLayout.call(
-      this,
-      get(this.context.plugins.toJS(), `${this.getSource()}.layout`, layout),
-    );
 
     if (!this.isCreating()) {
       const mainField = get(this.getModel(), 'info.mainField') || this.getModel().primaryKey;
       this.props.getData(this.props.match.params.id, this.getSource(), mainField);
     }
+
+    // Get all relations made with the upload plugin
+    const fileRelations = Object.keys(get(this.getSchema(), 'relations', {})).reduce((acc, current) => {
+      const association = get(this.getSchema(), ['relations', current], {});
+
+      if (association.plugin === 'upload' && association[association.type] === 'file') {
+        const relation = {
+          name: current,
+          multiple: association.nature === 'manyToManyMorph',
+        };
+
+        acc.push(relation);
+      }
+      return acc;
+    }, []);
+
+    // Update the reducer so we can use it to create the appropriate FormData in the saga
+    this.props.setFileRelations(fileRelations);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -85,6 +100,14 @@ export class EditPage extends React.Component {
   componentWillUnmount() {
     this.props.resetProps();
   }
+
+  /**
+   * Retrive the model's custom layout
+   * @return {[type]} [description]
+   */
+  getLayout = () => (
+    bindLayout.call(this, get(this.context.plugins.toJS(), `${this.getSource()}.layout`, layout))
+  )
 
   /**
    * Retrieve the model
@@ -125,7 +148,7 @@ export class EditPage extends React.Component {
     // Check if date
     if (isObject(e.target.value) && e.target.value._isAMomentObject === true) {
       value = moment(e.target.value, 'YYYY-MM-DD HH:mm:ss').format();
-    } else if (['float', 'integer', 'biginteger', 'decimal'].indexOf(this.getSchema().fields[e.target.name].type) !== -1) {
+    } else if (['float', 'integer', 'biginteger', 'decimal'].indexOf(get(this.getSchema(), ['fields', e.target.name, 'type'])) !== -1) {
       value = toNumber(e.target.value);
     }
 
@@ -157,7 +180,11 @@ export class EditPage extends React.Component {
 
   isCreating = () => this.props.match.params.id === 'create';
 
-  isRelationComponentNull = () => size(get(this.getSchema(), 'relations')) === 0;
+  isRelationComponentNull = () => (
+    Object.keys(get(this.getSchema(), 'relations', {})).filter(relation => (
+      get(this.getSchema(), ['relations', relation, 'plugin']) !== 'upload'
+    )).length === 0
+  )
 
   // NOTE: technical debt that needs to be redone
   generateFormFromRecord = () => (
@@ -168,20 +195,24 @@ export class EditPage extends React.Component {
     }, {})
   )
 
-  pluginHeaderActions = [
-    {
-      label: 'content-manager.containers.Edit.reset',
-      kind: 'secondary',
-      onClick: this.props.onCancel,
-      type: 'button',
-    },
-    {
-      kind: 'primary',
-      label: 'content-manager.containers.Edit.submit',
-      onClick: this.handleSubmit,
-      type: 'submit',
-    },
-  ];
+  pluginHeaderActions =  () => (
+    [
+      {
+        label: 'content-manager.containers.Edit.reset',
+        kind: 'secondary',
+        onClick: this.props.onCancel,
+        type: 'button',
+      },
+      {
+        kind: 'primary',
+        label: 'content-manager.containers.Edit.submit',
+        onClick: this.handleSubmit,
+        type: 'submit',
+        loader: this.props.editPage.showLoader,
+        style: this.props.editPage.showLoader ? { marginRight: '18px' } : {},
+      },
+    ]
+  );
 
   render() {
     const { editPage } = this.props;
@@ -192,7 +223,7 @@ export class EditPage extends React.Component {
           <BackHeader onClick={() => this.props.history.goBack()} />
           <div className={cn('container-fluid', styles.containerFluid)}>
             <PluginHeader
-              actions={this.pluginHeaderActions}
+              actions={this.pluginHeaderActions()}
               title={{ id: toString(editPage.pluginHeaderTitle) }}
             />
             <div className="row">
@@ -203,7 +234,7 @@ export class EditPage extends React.Component {
                     didCheckErrors={editPage.didCheckErrors}
                     formValidations={editPage.formValidations}
                     formErrors={editPage.formErrors}
-                    layout={this.layout}
+                    layout={this.getLayout()}
                     modelName={this.getModelName()}
                     onChange={this.handleChange}
                     record={editPage.record}
@@ -252,6 +283,7 @@ EditPage.propTypes = {
   onCancel: PropTypes.func.isRequired,
   resetProps: PropTypes.func.isRequired,
   schema: PropTypes.object.isRequired,
+  setFileRelations: PropTypes.func.isRequired,
   setFormErrors: PropTypes.func.isRequired,
   submit: PropTypes.func.isRequired,
 };
@@ -264,6 +296,7 @@ function mapDispatchToProps(dispatch) {
       initModelProps,
       onCancel,
       resetProps,
+      setFileRelations,
       setFormErrors,
       submit,
     },

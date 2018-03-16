@@ -14,7 +14,7 @@
     "請不要吝嗇使用以下的管道問我們問題，或是給我們建議。",
 
   "app.components.InputFile.newFile": "增加新檔案 {browse}",
-  "app.components.InputFileDetails.details": "詳細資料",
+  "app.components.InputFileDetails.open": "Open in a new tab",
   "app.components.ImgPreview.hint":
     "將您要上傳的檔案拖拉到這個框框，或是瀏覽檔案",
   "app.components.ImgPreview.hint.browse": "瀏覽",
@@ -111,7 +111,7 @@
 
   "Auth & Permissions": "認證 & 權限",
   "Content Manager": "內容管理",
-  "Content Type Builder": "創建資料結構",
+  "Content Type Builder": "建立和更新資料結構",
   "Settings Manager": "管理設定",
   "Email": "Email",
   "Password": "密碼",
