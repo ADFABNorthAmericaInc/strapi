@@ -119,8 +119,8 @@
       "collection": "clusterfacets",
       "via": "author"
     },
-    "picture": {
-      "collection": "file",
+    "profilePicture": {
+      "model": "file",
       "via": "related",
       "plugin": "upload"
     }
