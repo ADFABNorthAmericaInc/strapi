@@ -47,6 +47,14 @@
     "lastName": {
       "type": "string"
     },
+    "lang": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "en",
+        "fr"
+      ]
+    },
     "votes": {
       "collection": "vote",
       "via": "user"
