@@ -189,20 +189,32 @@ module.exports = {
     });
 
     try {
-      // Send an email to the user.
-      await strapi.plugins['email'].services.email.send({
-        to: user.email,
-        from: (settings.from.email || settings.from.name) ? `"${settings.from.name}" <${settings.from.email}>` : undefined,
-        replyTo: settings.response_email,
-        subject: settings.object,
-        text: settings.message,
-        html: settings.message
-      });
+      if (_.get(strapi.plugins['users-permissions'], 'config.sendGridAPIKey')) {
+        const sgMail = require('@sendgrid/mail');
+        sgMail.setApiKey(_.get(strapi.plugins['users-permissions'], 'config.sendGridAPIKey'));
+
+        // Envoi du mail client
+        let subjectCustomer = 'Ideation6 - Reset your password';
+        if (user.lang === 'fr') {
+          subjectCustomer = 'Ideation6 - Réinitialiser votre mot de passe';
+        }
+
+        const msgCustomer = {
+          to: user.email,
+          from: 'noreply@ideation6.com',
+          subject: subjectCustomer,
+          text: settings.message,
+          html: settings.message
+        };
+        sgMail.send(msgCustomer);
+      } else {
+        return ctx.badRequest(null, err);
+      }
     } catch (err) {
       return ctx.badRequest(null, err);
     }
 
-    // Update the user.
+    // // Update the user.
     await strapi.query('user', 'users-permissions').update(user);
 
     ctx.send({ ok: true });
