@@ -132,6 +132,5 @@
       "via": "related",
       "plugin": "upload"
     }
-  },
-  "collectionName": "users-permissions_user"
+  }
 }
