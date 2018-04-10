@@ -66,37 +66,51 @@ function LeftMenuLinkContainer({ plugins }) {
       </li>
     );
 
-  return (
-    <div className={styles.leftMenuLinkContainer}>
-      {linkSections}
-      <div>
-        <p className={styles.title}><FormattedMessage {...messages.plugins} /></p>
-        <ul className={styles.list}>
-          {pluginsLinks}
-        </ul>
+  if (process.env.NODE_ENV === 'production') {
+    return (
+      <div className={styles.leftMenuLinkContainer}>
+        {linkSections}
+        <div>
+          <p className={styles.title}><FormattedMessage {...messages.plugins} /></p>
+          <ul className={styles.list}>
+            {pluginsLinks}
+          </ul>
+        </div>
       </div>
-      <div>
-        <p className={styles.title}><FormattedMessage {...messages.general} /></p>
-        <ul className={styles.list}>
-          <LeftMenuLink
-            icon="list"
-            label={messages.listPlugins.id}
-            destination="/list-plugins"
-          />
-          <LeftMenuLink
-            icon="shopping-basket"
-            label={messages.installNewPlugin.id}
-            destination="/install-plugin"
-          />
-          <LeftMenuLink
-            icon="gear"
-            label={messages.configuration.id}
-            destination="/configuration"
-          />
-        </ul>
+    );
+  } else {
+    return (
+      <div className={styles.leftMenuLinkContainer}>
+        {linkSections}
+        <div>
+          <p className={styles.title}><FormattedMessage {...messages.plugins} /></p>
+          <ul className={styles.list}>
+            {pluginsLinks}
+          </ul>
+        </div>
+        <div>
+          <p className={styles.title}><FormattedMessage {...messages.general} /></p>
+          <ul className={styles.list}>
+            <LeftMenuLink
+              icon="list"
+              label={messages.listPlugins.id}
+              destination="/list-plugins"
+            />
+            <LeftMenuLink
+              icon="shopping-basket"
+              label={messages.installNewPlugin.id}
+              destination="/install-plugin"
+            />
+            <LeftMenuLink
+              icon="gear"
+              label={messages.configuration.id}
+              destination="/configuration"
+            />
+          </ul>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 LeftMenuLinkContainer.propTypes = {

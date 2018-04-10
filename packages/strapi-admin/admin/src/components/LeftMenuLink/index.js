@@ -24,6 +24,12 @@ class LeftMenuLink extends React.Component { // eslint-disable-line react/prefer
         <span>{upperFirst(this.props.source.split('-').join(' '))}</span>
       </div>) : '';
 
+    var listLabelToDisable = ['Boards', 'Brainstorms', 'Clusterfacets', 'Clusterideas', 'Criteria', 'Facets', 'Ideas', 'Votes', 'Roles & Permissions', 'Content Type Builder', 'Settings Manager'];
+
+    if (listLabelToDisable.indexOf(this.props.label) > -1 && process.env.NODE_ENV === 'production') {
+      return null;
+    }
+
     // Check if messageId exists in en locale to prevent warning messages
     const content = en[this.props.label] ? (
       <FormattedMessage
