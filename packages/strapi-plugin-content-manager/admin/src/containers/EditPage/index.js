@@ -99,6 +99,11 @@ export class EditPage extends React.Component {
     }
   }
 
+  componentDidCatch(error, info) {
+    console.log('err', error);
+    console.log('info', info);
+  }
+
   componentWillUnmount() {
     this.props.resetProps();
   }
@@ -215,11 +220,6 @@ export class EditPage extends React.Component {
   }
 
   layout = bindLayout.call(this, layout);
-
-  componentDidCatch(error, info) {
-    console.log('err', error);
-    console.log('info', info);
-  }
 
   isCreating = () => this.props.match.params.id === 'create';
 
