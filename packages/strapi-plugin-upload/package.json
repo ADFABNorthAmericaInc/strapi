@@ -23,6 +23,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
+    "fluent-ffmpeg": "^2.1.2",
     "react-copy-to-clipboard": "^5.0.1",
     "strapi-upload-local": "3.0.0-alpha.11.2",
     "stream-to-array": "^2.3.0",

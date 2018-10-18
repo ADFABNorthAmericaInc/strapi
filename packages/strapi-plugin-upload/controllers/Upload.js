@@ -7,6 +7,8 @@
  */
 
 const _ = require('lodash');
+const path = require('path');
+const ffmpeg = require('fluent-ffmpeg');
 
 module.exports = {
   upload: async (ctx) => {
@@ -64,7 +66,18 @@ module.exports = {
     ctx.send(uploadedFiles.map((file) => {
       // If is local server upload, add backend host as prefix
       if (file.url && file.url[0] === '/') {
+        var fileUrl = file.url;
         file.url = strapi.config.url + file.url;
+
+        var mp3Path = path.join(process.cwd(), 'public', fileUrl);
+        if(mp3Path.indexOf('.mp3') > -1) {
+          ffmpeg(mp3Path).on('end', function(cmd) {})
+            .on('error', function(err) {})
+            .format('mp3')
+            .audioCodec('h264')
+            .output(path.join(process.cwd(), 'public', fileUrl))
+            .run();
+        }
       }
 
       if (_.isArray(file.related)) {
