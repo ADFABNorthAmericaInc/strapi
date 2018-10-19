@@ -74,7 +74,6 @@ module.exports = {
           ffmpeg(mp3Path).on('end', function(cmd) {})
             .on('error', function(err) {})
             .format('mp3')
-            .audioCodec('h264')
             .output(path.join(process.cwd(), 'public', fileUrl))
             .run();
         }
