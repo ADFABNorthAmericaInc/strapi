@@ -9,6 +9,7 @@
 const _ = require('lodash');
 const path = require('path');
 const ffmpeg = require('fluent-ffmpeg');
+const exec = require('child_process').exec;
 
 module.exports = {
   upload: async (ctx) => {
@@ -71,10 +72,18 @@ module.exports = {
 
         var mp3Path = path.join(process.cwd(), 'public', fileUrl);
         if(mp3Path.indexOf('.mp3') > -1) {
-          ffmpeg(mp3Path).on('end', function(cmd) {})
-            .on('error', function(err) {})
+          ffmpeg(mp3Path).on('end', function(cmd) {
+              exec(`mv ${mp3Path.replace('.mp3', '_.mp3')} ${mp3Path}`, function(err, stdout, stderr) {
+                console.log('done')
+              });
+            })
+            .on('error', function(err) {
+              console.log('error from ffmpeg mp3 convertion', err)
+            })
             .format('mp3')
-            .output(path.join(process.cwd(), 'public', fileUrl))
+            .audioCodec('libmp3lame')
+            .output(mp3Path.replace('.mp3', '_.mp3'))
+            .noVideo()
             .run();
         }
       }
